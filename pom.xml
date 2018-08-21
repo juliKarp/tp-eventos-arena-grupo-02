@@ -12,6 +12,14 @@
 		<version>3.6.3</version>
 	</parent>
 
+	<dependencies>
+		<dependency>
+			<groupId>tp-eventos-2018-grupo-1</groupId>
+			<artifactId>tp-eventos</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+
 	<repositories>
 		<repository>
 			<id>uqbar-wiki.org-releases</id>
