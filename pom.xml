@@ -1,0 +1,30 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>tp-eventos-gui</artifactId>
+	<version>1</version>
+
+	<parent>
+		<groupId>org.uqbar-project</groupId>
+		<artifactId>arena-xtend-parent</artifactId>
+		<version>3.6.3</version>
+	</parent>
+
+
+
+	<repositories>
+		<repository>
+			<id>uqbar-wiki.org-releases</id>
+			<name>uqbar-wiki.org-releases</name>
+			<url>http://maven.uqbar.org/releases</url>
+		</repository>
+		<repository>
+			<snapshots />
+			<id>uqbar-wiki.org-snapshots</id>
+			<name>uqbar-wiki.org-snapshots</name>
+			<url>http://maven.uqbar.org/snapshots</url>
+		</repository>
+	</repositories>
+</project>
