@@ -12,8 +12,6 @@
 		<version>3.6.3</version>
 	</parent>
 
-
-
 	<repositories>
 		<repository>
 			<id>uqbar-wiki.org-releases</id>
