@@ -15,17 +15,18 @@ import org.uqbar.arena.windows.Window
 import org.uqbar.arena.windows.WindowOwner
 
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
+import edu.algo3.eventos.runnable.EventOSApplication
 
 class MainMenu extends Window<Estadisticas> {
 
 	new(WindowOwner owner, Estadisticas model) {
 		super(owner, model)
+		this.title = "EventOS"
 	}
 
 	override createContents(Panel mainPanel) {
-		this.title = "EventOS"
-		mainPanel.layout = new VerticalLayout
 		
+		mainPanel.layout = new VerticalLayout
 		new Panel(mainPanel) => [
 			layout = new ColumnLayout(2)
 			agregarPanelEstadisticas
@@ -83,7 +84,7 @@ class MainMenu extends Window<Estadisticas> {
 		]
 		new Button(usuariosPanel) => [
 			caption = "Gestión de Usuarios"
-			onClick[aplicacion.gestionDeUsuariosWindow()]
+			onClick[aplicacion.gestionDeUsuarios(this)]
 		]
 	}
 	

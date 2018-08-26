@@ -1,26 +1,25 @@
 package edu.algo3.eventos.view
 
 import edu.algo3.eventos.model.Usuario
+import org.uqbar.arena.aop.windows.TransactionalDialog
 import org.uqbar.arena.layout.ColumnLayout
 import org.uqbar.arena.layout.VerticalLayout
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.widgets.Label
 import org.uqbar.arena.widgets.Panel
 import org.uqbar.arena.widgets.TextBox
-import org.uqbar.arena.windows.Window
-import org.uqbar.arena.windows.WindowOwner
 
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
 
-class EditarUsuarioMenu extends Window<Usuario> {
+class EditarUsuarioMenu extends TransactionalDialog<Usuario> {
 
-	new(WindowOwner owner, Usuario model) {
+	new(GestionUsuariosMenu owner, Usuario model) {
 		super(owner, model)
+		this.title = "EventOS - Usuario"
 	}
 
-	override createContents(Panel mainPanel) {
-		this.title = "EventOS - Usuario"
-		mainPanel => [
+	override createFormPanel(Panel mainPanel) {
+		new Panel(mainPanel) => [
 			layout = new ColumnLayout(2)
 			agregarNombreValor("Username:", "username")
 			agregarNombreValor("Nombre:", "nombre")
@@ -28,18 +27,22 @@ class EditarUsuarioMenu extends Window<Usuario> {
 			agregarNombreValor("email:", "email")
 			agregarNombreValor("Tipo:", "tipo")
 			agregarNombreValor("Fecha de nacimiento:", "nacimiento")
-			new Button(it) => [
-				caption = "Cancelar"
-				onClick[this.close]
-			]
-
-			new Button(it) => [
-				caption = "Guardar"
-				onClick[]
-			]
 		]
 	}
 
+	override addActions(Panel actions) {
+		new Button(actions) => [
+			caption = "Cancelar"	
+			onClick [this.cancel]
+		]
+		
+		new Button(actions) => [
+			caption = "Guardar"
+			onClick [this.accept]
+			setAsDefault
+			disableOnError	
+		]
+	}
 	
 	def void agregarNombreValor(Panel panel, String nombre, String valor) {
 		var valorPanel = new Panel(panel)
@@ -55,4 +58,5 @@ class EditarUsuarioMenu extends Window<Usuario> {
 			alignLeft
 		]
 	}
+	
 }

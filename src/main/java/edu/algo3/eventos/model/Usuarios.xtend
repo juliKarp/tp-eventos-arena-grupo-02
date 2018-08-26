@@ -1,9 +1,10 @@
 package edu.algo3.eventos.model
 
+import java.time.LocalDate
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.model.annotations.Observable
-import java.time.LocalDate
+import org.uqbar.commons.model.annotations.TransactionalAndObservable
 
 @Observable
 @Accessors
@@ -19,7 +20,7 @@ class Usuarios {
 
 }
 
-@Observable
+@TransactionalAndObservable
 @Accessors
 class Usuario {
 	String username

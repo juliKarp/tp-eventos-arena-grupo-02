@@ -10,19 +10,17 @@ import org.uqbar.arena.widgets.Panel
 import org.uqbar.arena.widgets.tables.Column
 import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.Window
-import org.uqbar.arena.windows.WindowOwner
 
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
 
 class GestionUsuariosMenu extends Window<Usuarios> {
 
-	new(WindowOwner owner, Usuarios model) {
+	new(MainMenu owner, Usuarios model) {
 		super(owner, model)
+		this.title = "EventOS - Gestión de Usuarios"
 	}
 
 	override createContents(Panel mainPanel) {
-		this.title = "EventOS - Gestión de Usuarios"
-
 		mainPanel => [
 			layout = new HorizontalLayout
 			agregarTablaUsuarios
@@ -31,7 +29,7 @@ class GestionUsuariosMenu extends Window<Usuarios> {
 	}
 	
 	def aplicacion() {
-		this.owner as EventOSApplication
+		(this.owner as MainMenu).aplicacion
 	}
 
 	def void agregarTablaUsuarios(Panel panel) {
@@ -62,7 +60,7 @@ class GestionUsuariosMenu extends Window<Usuarios> {
 			new Button(it) => [
 				caption = "Editar"
 				bindEnabled(new NotNullObservable("usuarioSeleccionado"))
-				onClick[aplicacion.editarUsuarioWindow(this.modelObject.usuarioSeleccionado)]
+				onClick[aplicacion.editarUsuario(this, this.modelObject.usuarioSeleccionado)]
 			]
 
 			new Button(it) => [
