@@ -1,6 +1,6 @@
 package edu.algo3.eventos.view
 
-import edu.algo3.eventos.model.Usuario
+import edu.algo2.eventos.Usuario
 import edu.algo3.eventos.model.Usuarios
 import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.layout.HorizontalLayout
@@ -18,6 +18,7 @@ class GestionUsuariosMenu extends Window<Usuarios> {
 	new(MainMenu owner, Usuarios model) {
 		super(owner, model)
 		this.title = "EventOS - Gestión de Usuarios"
+		this.modelObject.actualizarUsuarios
 	}
 
 	override createContents(Panel mainPanel) {
@@ -29,7 +30,11 @@ class GestionUsuariosMenu extends Window<Usuarios> {
 	}
 	
 	def aplicacion() {
-		(this.owner as MainMenu).aplicacion
+		mainMenu.aplicacion
+	}
+	
+	def mainMenu() {
+		this.owner as MainMenu
 	}
 
 	def void agregarTablaUsuarios(Panel panel) {
@@ -38,9 +43,8 @@ class GestionUsuariosMenu extends Window<Usuarios> {
 			items <=> "usuarios"
 			value <=> "usuarioSeleccionado"
 			numberVisibleRows = 6
-			agregarColumna("Username", "username")
-			agregarColumna("Nombre", "nombre")
-			agregarColumna("Apellido", "apellido")
+			agregarColumna("Username", "nombreUsuario")
+			agregarColumna("Nombre y apellido", "nombreApellido")
 			agregarColumna("email", "email")
 		]
 
@@ -60,13 +64,16 @@ class GestionUsuariosMenu extends Window<Usuarios> {
 			new Button(it) => [
 				caption = "Editar"
 				bindEnabled(new NotNullObservable("usuarioSeleccionado"))
-				onClick[aplicacion.editarUsuario(this, this.modelObject.usuarioSeleccionado)]
+				onClick[aplicacion.editarUsuario(this, this.modelObject)]
 			]
 
 			new Button(it) => [
 				caption = "Elimiar"
 				bindEnabled(new NotNullObservable("usuarioSeleccionado"))
-				onClick[this.modelObject.eliminarUsuarioSeleccionado]
+				onClick[
+					this.modelObject.eliminarUsuarioSeleccionado
+					this.mainMenu.actualizar
+				]
 			]
 
 			new Button(it) => [

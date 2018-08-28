@@ -1,44 +1,38 @@
 package edu.algo3.eventos.model
 
-import java.time.LocalDate
+import edu.algo2.eventos.TipoDeUsuario
+import edu.algo2.eventos.Usuario
+import edu.algo2.repositorio.RepoUsuarios
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.uqbar.commons.applicationContext.ApplicationContext
 import org.uqbar.commons.model.annotations.Observable
-import org.uqbar.commons.model.annotations.TransactionalAndObservable
 
 @Observable
 @Accessors
 class Usuarios {
 	List<Usuario> usuarios
 	Usuario usuarioSeleccionado
+	List<TipoDeUsuario> tiposUsuarioPosibles
+	
+	new (){
+		tiposUsuarioPosibles = newArrayList
+		tiposUsuarioPosibles.add(repoUsuarios.tipoUsuarioFree)
+		tiposUsuarioPosibles.add(repoUsuarios.tipoUsuarioAmateur)
+		tiposUsuarioPosibles.add(repoUsuarios.tipoUsuarioProfesional)
+	}
+	
+	def actualizarUsuarios(){
+		usuarios = newArrayList(repoUsuarios.elementos)
+	}
 
 	def eliminarUsuarioSeleccionado() {
-		val List<Usuario> nuevaListaUsuarios = newArrayList(usuarios)
-		nuevaListaUsuarios.remove(usuarioSeleccionado)
-		usuarios = nuevaListaUsuarios
+		repoUsuarios.delete(usuarioSeleccionado)
+		actualizarUsuarios
+	}
+	
+	def RepoUsuarios getRepoUsuarios() {
+		ApplicationContext.instance.getSingleton(typeof(Usuario))
 	}
 
-}
-
-@TransactionalAndObservable
-@Accessors
-class Usuario {
-	String username
-	String nombre
-	String apellido
-	String email
-	String tipo
-	LocalDate nacimiento
-
-	new() {
-	}
-
-	new(int i) {
-		username = "1" + String.valueOf(i)
-		nombre = "2" + String.valueOf(i)
-		apellido = "3" + String.valueOf(i)
-		email = "4" + String.valueOf(i)
-		tipo = "tipo"
-		nacimiento = LocalDate.now.minusYears(i)
-	}
 }

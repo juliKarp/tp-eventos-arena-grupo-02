@@ -24,6 +24,7 @@ class MainMenu extends Window<Estadisticas> {
 	new(WindowOwner owner, Estadisticas model) {
 		super(owner, model)
 		this.title = "EventOS"
+		this.actualizar
 	}
 
 	override createContents(Panel mainPanel) {
@@ -41,6 +42,9 @@ class MainMenu extends Window<Estadisticas> {
 	
 	def aplicacion() {
 		this.owner as EventOSApplication
+	}
+	def actualizar(){
+		this.modelObject.actualizar
 	}
 
 	def void agregarPanelEstadisticas(Panel panel) {
@@ -78,7 +82,7 @@ class MainMenu extends Window<Estadisticas> {
 		]
 
 		new Table<Usuario>(usuariosPanel, typeof(Usuario)) => [
-			items <=> "listaUsuariosActivos"
+			items <=> "usuariosActivos"
 			numberVisibleRows = 5
 			agregarColumna("Username", "nombreUsuario", 100)
 			agregarColumna("Nombre y apellido", "nombreApellido", 200)
@@ -97,10 +101,10 @@ class MainMenu extends Window<Estadisticas> {
 		]
 
 		new Table<Locacion>(locacionesPanel, typeof(Locacion)) => [
-			items <=> "listaLocacionesPopulares"
+			items <=> "locacionesPopulares"
 			numberVisibleRows = 5
 			agregarColumna("Nombre", "nombre", 200)
-			agregarColumna("Superficie", "superficie", 100) //TODO: Deberia ser capacidadMaxima, pero este metodo recibe cant personas
+			agregarColumna("Capacidad", "capacidadMaxima", 100) //TODO: Deberia ser capacidadMaxima, pero este metodo recibe cant personas
 		]
 		
 		new Button(locacionesPanel) => [
@@ -116,7 +120,7 @@ class MainMenu extends Window<Estadisticas> {
 		]
 
 		new Table<Servicio>(serviciosPanel, typeof(Servicio)) => [
-			items <=> "listaServiciosNuevos"
+			items <=> "serviciosNuevos"
 			numberVisibleRows = 5
 			agregarColumna("Nombre", "descripcion", 200)
 			agregarColumna("Tarifa", "tarifa", 100)
@@ -125,10 +129,11 @@ class MainMenu extends Window<Estadisticas> {
 		new Button(serviciosPanel) => [
 			caption = "Gestión de Servicios"
 			onClick[this.modelObject.sumarEstadistica]
+			width = 320
 		]
 	}
 
-	def void agregarColumna(Table tabla, String titulo, String valor, Integer size) {
+	def void agregarColumna(Table<?> tabla, String titulo, String valor, Integer size) {
 		new Column(tabla) => [
 			title = titulo
 			bindContentsToProperty(valor)

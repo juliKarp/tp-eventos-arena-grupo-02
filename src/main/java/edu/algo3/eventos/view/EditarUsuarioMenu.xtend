@@ -1,19 +1,23 @@
 package edu.algo3.eventos.view
 
-import edu.algo3.eventos.model.Usuario
+import edu.algo2.eventos.Usuario
+import edu.algo2.repositorio.RepoUsuarios
+import edu.algo3.eventos.model.Usuarios
 import org.uqbar.arena.aop.windows.TransactionalDialog
 import org.uqbar.arena.layout.ColumnLayout
 import org.uqbar.arena.layout.VerticalLayout
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.widgets.Label
+import org.uqbar.arena.widgets.List
 import org.uqbar.arena.widgets.Panel
 import org.uqbar.arena.widgets.TextBox
+import org.uqbar.commons.applicationContext.ApplicationContext
 
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
 
-class EditarUsuarioMenu extends TransactionalDialog<Usuario> {
+class EditarUsuarioMenu extends TransactionalDialog<Usuarios> {
 
-	new(GestionUsuariosMenu owner, Usuario model) {
+	new(GestionUsuariosMenu owner, Usuarios model) {
 		super(owner, model)
 		this.title = "EventOS - Usuario"
 	}
@@ -21,12 +25,17 @@ class EditarUsuarioMenu extends TransactionalDialog<Usuario> {
 	override createFormPanel(Panel mainPanel) {
 		new Panel(mainPanel) => [
 			layout = new ColumnLayout(2)
-			agregarNombreValor("Username:", "username")
-			agregarNombreValor("Nombre:", "nombre")
-			agregarNombreValor("Apellido:", "apellido")
-			agregarNombreValor("email:", "email")
-			agregarNombreValor("Tipo:", "tipo")
-			agregarNombreValor("Fecha de nacimiento:", "nacimiento")
+			agregarNombreValor("Username:", "usuarioSeleccionado.nombreUsuario")
+			agregarNombreValor("Nombre:", "usuarioSeleccionado.nombreApellido")
+			agregarNombreValor("email:", "usuarioSeleccionado.email")
+			
+			new List(mainPanel) => [
+				allowNull(false)
+				(items <=> "tiposUsuarioPosibles")//.adapter = new PropertyAdapter(typeof(TipoDeUsuario), "nombre")
+				value <=> "usuarioSeleccionado.tipoDeUsuario"
+			]
+
+			agregarNombreValor("Fecha de nacimiento:", "usuarioSeleccionado.fechaNacimiento")
 		]
 	}
 
@@ -57,6 +66,10 @@ class EditarUsuarioMenu extends TransactionalDialog<Usuario> {
 			width = 200
 			alignLeft
 		]
+	}
+	
+	def RepoUsuarios getRepoUsuarios() {
+		ApplicationContext.instance.getSingleton(typeof(Usuario))
 	}
 	
 }
