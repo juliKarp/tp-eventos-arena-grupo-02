@@ -21,13 +21,7 @@ class EventOSApplication extends Application {
 	}
 
 	override protected createMainWindow() {
-		val estadisticas = new Estadisticas => [
-			usuarios = newArrayList => [
-				for (var i = 0; i < 3; i++) {
-					add(new Usuario(i))
-				}
-			]
-		]
+		val estadisticas = new Estadisticas
 		new MainMenu(this, estadisticas)
 	}
 

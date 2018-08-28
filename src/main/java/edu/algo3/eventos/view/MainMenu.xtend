@@ -1,7 +1,6 @@
 package edu.algo3.eventos.view
 
 import edu.algo3.eventos.model.Estadisticas
-import edu.algo3.eventos.model.Usuario
 import org.uqbar.arena.layout.ColumnLayout
 import org.uqbar.arena.layout.HorizontalLayout
 import org.uqbar.arena.layout.VerticalLayout
@@ -16,6 +15,9 @@ import org.uqbar.arena.windows.WindowOwner
 
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
 import edu.algo3.eventos.runnable.EventOSApplication
+import edu.algo2.eventos.Usuario
+import edu.algo2.eventos.Locacion
+import edu.algo2.eventos.Servicio
 
 class MainMenu extends Window<Estadisticas> {
 
@@ -76,49 +78,34 @@ class MainMenu extends Window<Estadisticas> {
 		]
 
 		new Table<Usuario>(usuariosPanel, typeof(Usuario)) => [
-			items <=> "usuarios"
+			items <=> "listaUsuariosActivos"
 			numberVisibleRows = 5
-			agregarColumnaUsuarios("Username", "username")
-			agregarColumnaUsuarios("Nombre", "nombre")
-			agregarColumnaUsuarios("Apellido", "apellido")
+			agregarColumna("Username", "nombreUsuario", 100)
+			agregarColumna("Nombre y apellido", "nombreApellido", 200)
 		]
+		
 		new Button(usuariosPanel) => [
 			caption = "Gestión de Usuarios"
 			onClick[aplicacion.gestionDeUsuarios(this)]
 		]
 	}
 	
-	def void agregarColumnaUsuarios(Table<Usuario> tabla, String titulo, String valor) {
-		new Column<Usuario>(tabla) => [
-			title = titulo
-			bindContentsToProperty(valor)
-			fixedSize = 100
-		]
-	}
-
 	def void agregarPanelLocaciones(Panel panel) {
 		var locacionesPanel = new GroupPanel(panel) => [
 			title = "Locaciones más populares:"
 			layout = new VerticalLayout
 		]
 
-		new Table<Usuario>(locacionesPanel, typeof(Usuario)) => [
-			items <=> "usuarios"
+		new Table<Locacion>(locacionesPanel, typeof(Locacion)) => [
+			items <=> "listaLocacionesPopulares"
 			numberVisibleRows = 5
-			agregarColumnaLocaciones("Nombre", "nombre")
-			agregarColumnaLocaciones("Capacidad", "apellido")
+			agregarColumna("Nombre", "nombre", 200)
+			agregarColumna("Superficie", "superficie", 100) //TODO: Deberia ser capacidadMaxima, pero este metodo recibe cant personas
 		]
+		
 		new Button(locacionesPanel) => [
 			caption = "Gestión de Locaciones"
 			onClick[this.modelObject.sumarEstadistica]
-		]
-	}
-	
-	def void agregarColumnaLocaciones(Table<Usuario> tabla, String titulo, String valor) {
-		new Column<Usuario>(tabla) => [
-			title = titulo
-			bindContentsToProperty(valor)
-			fixedSize = 150
 		]
 	}
 	
@@ -128,23 +115,24 @@ class MainMenu extends Window<Estadisticas> {
 			layout = new VerticalLayout
 		]
 
-		new Table<Usuario>(serviciosPanel, typeof(Usuario)) => [
-			items <=> "usuarios"
+		new Table<Servicio>(serviciosPanel, typeof(Servicio)) => [
+			items <=> "listaServiciosNuevos"
 			numberVisibleRows = 5
-			agregarColumnaLocaciones("Nombre", "nombre")
-			agregarColumnaLocaciones("Tarifa", "apellido")
+			agregarColumna("Nombre", "descripcion", 200)
+			agregarColumna("Tarifa", "tarifa", 100)
 		]
+		
 		new Button(serviciosPanel) => [
 			caption = "Gestión de Servicios"
 			onClick[this.modelObject.sumarEstadistica]
 		]
 	}
-	
-	def void agregarColumnaServicios(Table<Usuario> tabla, String titulo, String valor) {
-		new Column<Usuario>(tabla) => [
+
+	def void agregarColumna(Table tabla, String titulo, String valor, Integer size) {
+		new Column(tabla) => [
 			title = titulo
 			bindContentsToProperty(valor)
-			fixedSize = 150
+			fixedSize = size
 		]
 	}
 }
