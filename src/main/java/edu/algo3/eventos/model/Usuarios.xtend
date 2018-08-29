@@ -16,10 +16,11 @@ class Usuarios {
 	List<TipoDeUsuario> tiposUsuarioPosibles
 	
 	new (){
-		tiposUsuarioPosibles = newArrayList
-		tiposUsuarioPosibles.add(repoUsuarios.tipoUsuarioFree)
-		tiposUsuarioPosibles.add(repoUsuarios.tipoUsuarioAmateur)
-		tiposUsuarioPosibles.add(repoUsuarios.tipoUsuarioProfesional)
+		tiposUsuarioPosibles = newArrayList => [
+			add(repoUsuarios.tipoUsuarioFree)
+			add(repoUsuarios.tipoUsuarioAmateur)
+			add(repoUsuarios.tipoUsuarioProfesional)
+		]
 	}
 	
 	def actualizarUsuarios(){

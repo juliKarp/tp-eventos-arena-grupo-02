@@ -8,12 +8,12 @@ import org.uqbar.arena.layout.ColumnLayout
 import org.uqbar.arena.layout.VerticalLayout
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.widgets.Label
-import org.uqbar.arena.widgets.List
 import org.uqbar.arena.widgets.Panel
 import org.uqbar.arena.widgets.TextBox
 import org.uqbar.commons.applicationContext.ApplicationContext
 
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
+import org.uqbar.arena.widgets.Selector
 
 class EditarUsuarioMenu extends TransactionalDialog<Usuarios> {
 
@@ -26,16 +26,10 @@ class EditarUsuarioMenu extends TransactionalDialog<Usuarios> {
 		new Panel(mainPanel) => [
 			layout = new ColumnLayout(2)
 			agregarNombreValor("Username:", "usuarioSeleccionado.nombreUsuario")
-			agregarNombreValor("Nombre:", "usuarioSeleccionado.nombreApellido")
+			agregarNombreValor("Nombre y apellido:", "usuarioSeleccionado.nombreApellido")
 			agregarNombreValor("email:", "usuarioSeleccionado.email")
-			
-			new List(mainPanel) => [
-				allowNull(false)
-				(items <=> "tiposUsuarioPosibles")//.adapter = new PropertyAdapter(typeof(TipoDeUsuario), "nombre")
-				value <=> "usuarioSeleccionado.tipoDeUsuario"
-			]
-
 			agregarNombreValor("Fecha de nacimiento:", "usuarioSeleccionado.fechaNacimiento")
+			agregarSeleccionable("Tipo de usuario:", "tiposUsuarioPosibles", "usuarioSeleccionado.tipoDeUsuario")
 		]
 	}
 
@@ -65,6 +59,22 @@ class EditarUsuarioMenu extends TransactionalDialog<Usuarios> {
 			value <=> valor
 			width = 200
 			alignLeft
+		]
+	}
+	
+	def agregarSeleccionable(Panel panel, String nombre, String valores, String valor) {
+		var valorPanel = new Panel(panel)
+		valorPanel.layout = new VerticalLayout
+		new Label(valorPanel) => [
+			text = nombre
+			width = 100
+			alignLeft
+		]
+		new Selector(valorPanel) => [
+			allowNull(false)
+			items <=> valores
+			value <=> valor
+			width = 185
 		]
 	}
 	
