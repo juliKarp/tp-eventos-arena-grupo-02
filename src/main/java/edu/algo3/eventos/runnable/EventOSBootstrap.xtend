@@ -14,6 +14,7 @@ import java.time.temporal.ChronoUnit
 import org.uqbar.arena.bootstrap.CollectionBasedBootstrap
 import org.uqbar.commons.applicationContext.ApplicationContext
 import org.uqbar.geodds.Point
+import org.eclipse.xtend.lib.annotations.Accessors
 
 class EventOSBootstrap extends CollectionBasedBootstrap {
 	
@@ -21,12 +22,11 @@ class EventOSBootstrap extends CollectionBasedBootstrap {
 		ApplicationContext.instance.configureSingleton(typeof(Usuario), new RepoUsuarios)
 		ApplicationContext.instance.configureSingleton(typeof(Locacion), new RepoLocaciones)
 		ApplicationContext.instance.configureSingleton(typeof(Servicio), new RepoServicios)
+		ApplicationContext.instance.configureSingleton(typeof(Actualizacion), new Actualizacion)
+		
 	}
-	
+
 	override run() {
-		
-		
-		
 		val repoUsuarios = ApplicationContext.instance.getSingleton(typeof(Usuario)) as RepoUsuarios
 		val repoLocaciones = ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepoLocaciones
 		val repoServicios = ApplicationContext.instance.getSingleton(typeof(Servicio)) as RepoServicios
@@ -45,12 +45,12 @@ class EventOSBootstrap extends CollectionBasedBootstrap {
 				email = "martinvarela90@yahoo.com"
 			])
 		]
-		
+
 		repoLocaciones => [
-			create(new Locacion("Salón El Abierto",-34.603759, -58.381586,200.0))
-			create(new Locacion("Estadio Obras",-34.572224, -58.535651,2000.0))
+			create(new Locacion("Salón El Abierto", -34.603759, -58.381586, 200.0))
+			create(new Locacion("Estadio Obras", -34.572224, -58.535651, 2000.0))
 		]
-			
+
 		repoServicios => [
 			create(new Servicio("Fotografos unidos", new Point(-34, -51), 1000.0) => [
 				tipoTarifa = new TarifaFija
@@ -63,4 +63,10 @@ class EventOSBootstrap extends CollectionBasedBootstrap {
 			])
 		]
 	}
+}
+
+@Accessors
+class Actualizacion {
+	val actualizacionUsuarios = '[{"nombreUsuario":"nose","nombreApellido":"El Que no sabe","email":"no_se@hotmail.com","fechaNacimiento":"15/01/1992","direccion":{"calle":"25 de Mayo","numero":3918,"localidad":"San Martín","provincia":"Buenos Aires","coordenadas":{"x":-34.572224,"y":51.535651}}},{"nombreUsuario":"martin1990","nombreApellido":"Martín Varela","email":"otromail@yahoo.com","fechaNacimiento":"18/11/1990","direccion":{"calle":"Av. Triunvirato","numero":4065,"localidad":"CABA","provincia":"","coordenadas":{"x":-33.58236,"y":60.516598}}}]'
+	
 }

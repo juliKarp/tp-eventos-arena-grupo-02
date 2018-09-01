@@ -1,6 +1,10 @@
 package edu.algo3.eventos.view
 
+import edu.algo2.eventos.Locacion
+import edu.algo2.eventos.Servicio
+import edu.algo2.eventos.Usuario
 import edu.algo3.eventos.model.Estadisticas
+import edu.algo3.eventos.runnable.EventOSApplication
 import org.uqbar.arena.layout.ColumnLayout
 import org.uqbar.arena.layout.HorizontalLayout
 import org.uqbar.arena.layout.VerticalLayout
@@ -12,19 +16,15 @@ import org.uqbar.arena.widgets.tables.Column
 import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.Window
 import org.uqbar.arena.windows.WindowOwner
+import org.uqbar.commons.model.utils.ObservableUtils
 
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
-import edu.algo3.eventos.runnable.EventOSApplication
-import edu.algo2.eventos.Usuario
-import edu.algo2.eventos.Locacion
-import edu.algo2.eventos.Servicio
 
 class MainMenu extends Window<Estadisticas> {
 
 	new(WindowOwner owner, Estadisticas model) {
 		super(owner, model)
 		this.title = "EventOS"
-		this.actualizar
 	}
 
 	override createContents(Panel mainPanel) {
@@ -44,7 +44,9 @@ class MainMenu extends Window<Estadisticas> {
 		this.owner as EventOSApplication
 	}
 	def actualizar(){
-		this.modelObject.actualizar
+		ObservableUtils.firePropertyChanged(this.modelObject, "usuariosActivos")
+		ObservableUtils.firePropertyChanged(this.modelObject, "locacionesPopulares")
+		ObservableUtils.firePropertyChanged(this.modelObject, "serviciosNuevos")
 	}
 
 	def void agregarPanelEstadisticas(Panel panel) {
