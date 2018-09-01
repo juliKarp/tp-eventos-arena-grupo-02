@@ -6,10 +6,11 @@ import edu.algo2.eventos.Usuario
 import edu.algo2.repositorio.RepoLocaciones
 import edu.algo2.repositorio.RepoServicios
 import edu.algo2.repositorio.RepoUsuarios
+import java.time.LocalDateTime
+import java.util.ArrayList
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.applicationContext.ApplicationContext
 import org.uqbar.commons.model.annotations.Observable
-import java.util.ArrayList
 
 @Observable
 @Accessors
@@ -29,6 +30,30 @@ class Estadisticas {
 	}
 	def getServiciosNuevos() {
 		new ArrayList<Servicio>(repoServicios.elementos)
+	}
+	
+
+	def getCantidadEventos() {
+		eventos.size
+	}
+	def getCantidadEventosDelMes() {
+		eventos.filter[mismoMes(LocalDateTime.now)].size
+	}
+	def getCantidadEventosExitosos() {
+		eventos.filter[esExitoso].size
+	}
+	def getCantidadEventosFracasados() {
+		eventos.filter[esUnFracaso].size
+	}
+	def getCantidadEntradasVendidas() {
+		eventos.fold(0, [suma, invitacion|suma + invitacion.cantidadEntradas])
+	}
+	def getCantidadInvitacionesEnviadas() {
+		eventos.fold(0, [suma, invitacion|suma + invitacion.cantidadInvitaciones])
+	}
+	
+	def getEventos() {
+		repoUsuarios.elementos.map[eventos].flatten.toList
 	}
 	
 	def RepoUsuarios getRepoUsuarios() {

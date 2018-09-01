@@ -52,12 +52,12 @@ class MainMenu extends Window<Estadisticas> {
 	def void agregarPanelEstadisticas(Panel panel) {
 		new GroupPanel(panel) => [
 			title = "Estadísticas:"
-			agregarNombreValor("Cantidad total de eventos:", "valor")
-			agregarNombreValor("Eventos último mes:", "valor")
-			agregarNombreValor("Eventos exitosos:", "valor")
-			agregarNombreValor("Eventos fracasados:", "valor")
-			agregarNombreValor("Entradas vendidas:", "valor")
-			agregarNombreValor("Invitaciones enviadas:", "valor")
+			agregarNombreValor("Cantidad total de eventos:", "cantidadEventos")
+			agregarNombreValor("Eventos último mes:", "cantidadEventosDelMes")
+			agregarNombreValor("Eventos exitosos:", "cantidadEventosExitosos")
+			agregarNombreValor("Eventos fracasados:", "cantidadEventosFracasados")
+			agregarNombreValor("Entradas vendidas:", "cantidadEntradasVendidas")
+			agregarNombreValor("Invitaciones enviadas:", "cantidadInvitacionesEnviadas")
 			layout = new VerticalLayout
 		]
 	}

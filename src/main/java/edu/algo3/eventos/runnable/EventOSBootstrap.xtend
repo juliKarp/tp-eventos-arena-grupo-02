@@ -1,5 +1,9 @@
 package edu.algo3.eventos.runnable
 
+import edu.algo2.eventos.Entrada
+import edu.algo2.eventos.EventoAbierto
+import edu.algo2.eventos.EventoCerrado
+import edu.algo2.eventos.Invitacion
 import edu.algo2.eventos.Locacion
 import edu.algo2.eventos.Servicio
 import edu.algo2.eventos.TarifaFija
@@ -10,11 +14,12 @@ import edu.algo2.repositorio.RepoLocaciones
 import edu.algo2.repositorio.RepoServicios
 import edu.algo2.repositorio.RepoUsuarios
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
+import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.arena.bootstrap.CollectionBasedBootstrap
 import org.uqbar.commons.applicationContext.ApplicationContext
 import org.uqbar.geodds.Point
-import org.eclipse.xtend.lib.annotations.Accessors
 
 class EventOSBootstrap extends CollectionBasedBootstrap {
 	
@@ -32,7 +37,7 @@ class EventOSBootstrap extends CollectionBasedBootstrap {
 		val repoServicios = ApplicationContext.instance.getSingleton(typeof(Servicio)) as RepoServicios
 
 		repoUsuarios => [
-			create(new Usuario("lucas_capo", tipoUsuarioFree) => [
+			create(new Usuario("lucas_capo", tipoUsuarioAmateur) => [
 				fechaNacimiento = LocalDate.now.minus(25, ChronoUnit.YEARS)
 				direccion = new Point(-35, -60)
 				nombreApellido = "Lucas Lopez"
@@ -62,6 +67,38 @@ class EventOSBootstrap extends CollectionBasedBootstrap {
 				tipoTarifa = new TarifaPorPersona => [porcentajeMinimo = 0.1]
 			])
 		]
+		
+		
+		val locacion = new Locacion("Casa de Fiesta", -35, -59, 20.0)
+
+		val eventoAbierto = new EventoAbierto("La Fiesta", locacion) => [
+			fechaMaximaConfirmacion = LocalDateTime.now.plus(10, ChronoUnit.DAYS)
+			fechaDesde = LocalDateTime.now.plus(16, ChronoUnit.DAYS)
+			fechaHasta = LocalDateTime.now.plus(18, ChronoUnit.DAYS).minus(1, ChronoUnit.HOURS)
+			precio = 350.50
+			edadMinima = 12
+			organizador = repoUsuarios.elementos.get(0)
+			repoUsuarios.elementos.get(0).eventos.add(it)
+		]
+
+		val eventoCerrado = new EventoCerrado("La Fiesta Privada", locacion) => [
+			fechaMaximaConfirmacion = LocalDateTime.now.plus(10, ChronoUnit.DAYS)
+			fechaDesde = LocalDateTime.now.plus(16, ChronoUnit.DAYS)
+			fechaHasta = LocalDateTime.now.plus(18, ChronoUnit.DAYS).minus(1, ChronoUnit.HOURS)
+			capacidadMaxima = 10
+			organizador = repoUsuarios.elementos.get(1)
+			repoUsuarios.elementos.get(1).eventos.add(it)
+		]
+
+		val invitacionAceptada = new Invitacion(eventoCerrado, repoUsuarios.elementos.get(0), 5) => [aceptada = true]
+		eventoCerrado.invitaciones.add(invitacionAceptada)
+		
+		val invitacionRechazada = new Invitacion(eventoCerrado, repoUsuarios.elementos.get(1), 5) => [rechazada = true]
+		eventoCerrado.invitaciones.add(invitacionRechazada)
+		
+		val entrada = new Entrada(eventoAbierto, repoUsuarios.elementos.get(1))
+		eventoAbierto.entradasVendidas.add(entrada)
+
 	}
 }
 
