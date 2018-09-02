@@ -106,12 +106,12 @@ class MainMenu extends Window<Estadisticas> {
 			items <=> "locacionesPopulares"
 			numberVisibleRows = 5
 			agregarColumna("Nombre", "nombre", 200)
-			agregarColumna("Capacidad", "capacidadMaxima", 100) //TODO: Deberia ser capacidadMaxima, pero este metodo recibe cant personas
+			agregarColumna("Capacidad", "capacidadMaxima", 100)
 		]
 		
 		new Button(locacionesPanel) => [
 			caption = "Gestión de Locaciones"
-			onClick[this.modelObject.sumarEstadistica]
+			onClick[aplicacion.gestionDeLocaciones(this)]
 		]
 	}
 	

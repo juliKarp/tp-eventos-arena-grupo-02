@@ -105,5 +105,6 @@ class EventOSBootstrap extends CollectionBasedBootstrap {
 @Accessors
 class Actualizacion {
 	val actualizacionUsuarios = '[{"nombreUsuario":"nose","nombreApellido":"El Que no sabe","email":"no_se@hotmail.com","fechaNacimiento":"15/01/1992","direccion":{"calle":"25 de Mayo","numero":3918,"localidad":"San Martín","provincia":"Buenos Aires","coordenadas":{"x":-34.572224,"y":51.535651}}},{"nombreUsuario":"martin1990","nombreApellido":"Martín Varela","email":"otromail@yahoo.com","fechaNacimiento":"18/11/1990","direccion":{"calle":"Av. Triunvirato","numero":4065,"localidad":"CABA","provincia":"","coordenadas":{"x":-33.58236,"y":60.516598}}}]'
+	val actualizacionLocaciones = '[{"x":-34.603759,"y":-58.381586,"nombre":"El quinchito","superficie":150.00},{"x":-34.603759,"y":-60.381586,"nombre":"Salón El Abierto"},{"x":-34.572224,"y":-58.535651,"nombre":"Estadio Obras"}]'
 	
 }
