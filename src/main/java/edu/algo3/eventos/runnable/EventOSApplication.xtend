@@ -1,21 +1,23 @@
 package edu.algo3.eventos.runnable
 
 import edu.algo2.eventos.Locacion
+import edu.algo2.eventos.Servicio
 import edu.algo2.eventos.Usuario
-import edu.algo2.repositorio.RepoLocaciones
-import edu.algo2.repositorio.RepoUsuarios
 import edu.algo3.eventos.model.Estadisticas
 import edu.algo3.eventos.model.Locaciones
+import edu.algo3.eventos.model.Servicios
 import edu.algo3.eventos.model.Usuarios
 import edu.algo3.eventos.view.EditarLocacionMenu
+import edu.algo3.eventos.view.EditarServicioMenu
 import edu.algo3.eventos.view.EditarUsuarioMenu
 import edu.algo3.eventos.view.GestionLocacionesMenu
+import edu.algo3.eventos.view.GestionServiciosMenu
 import edu.algo3.eventos.view.GestionUsuariosMenu
 import edu.algo3.eventos.view.MainMenu
 import edu.algo3.eventos.view.NuevaLocacionMenu
+import edu.algo3.eventos.view.NuevoServicioMenu
 import edu.algo3.eventos.view.NuevoUsuarioMenu
 import org.uqbar.arena.Application
-import org.uqbar.commons.applicationContext.ApplicationContext
 
 class EventOSApplication extends Application {
 
@@ -38,6 +40,10 @@ class EventOSApplication extends Application {
 	def gestionDeLocaciones(MainMenu parent) {
 		new GestionLocacionesMenu(parent, new Locaciones).open
 	}
+	
+	def gestionDeServicios(MainMenu parent) {
+		new GestionServiciosMenu(parent, new Servicios).open
+	}	
 	
 	def nuevoUsuario(GestionUsuariosMenu parent) {
 		val nuevo = new Usuario
@@ -84,10 +90,26 @@ class EventOSApplication extends Application {
 		]
 	}
 
-	def RepoUsuarios getRepoUsuarios() {
-		ApplicationContext.instance.getSingleton(typeof(Usuario))
+	def nuevoServicio(GestionServiciosMenu parent) {
+		val nuevo = new Servicio
+		new NuevoServicioMenu(parent, nuevo) => [
+			onAccept[repoServicios.create(nuevo)]
+			open
+		]
 	}
-	def RepoLocaciones getRepoLocaciones() {
-		ApplicationContext.instance.getSingleton(typeof(Locacion))
+	
+	def editarServicio(GestionServiciosMenu parent, Servicio servicio) {
+		val copia = new Servicio => [
+			id = servicio.id
+			descripcion = servicio.descripcion
+			tarifa = servicio.tarifa
+			tarifaPorKm = servicio.tarifaPorKm
+			ubicacion = servicio.ubicacion
+			tipoTarifa = servicio.tipoTarifa
+		]
+		new EditarServicioMenu(parent, copia) => [
+			onAccept[repoServicios.update(copia)]
+			open
+		]
 	}
 }

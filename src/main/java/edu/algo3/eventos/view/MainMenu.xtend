@@ -130,7 +130,7 @@ class MainMenu extends Window<Estadisticas> {
 		
 		new Button(serviciosPanel) => [
 			caption = "Gestión de Servicios"
-			onClick[this.modelObject.sumarEstadistica]
+			onClick[aplicacion.gestionDeServicios(this)]
 			width = 320
 		]
 	}

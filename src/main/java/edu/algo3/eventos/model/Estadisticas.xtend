@@ -17,11 +17,6 @@ import org.uqbar.commons.model.annotations.Observable
 class Estadisticas {
 	int valor
 	
-	def void sumarEstadistica() {
-		valor += 50
-	}
-	
-	
 	def getUsuariosActivos() {
 		new ArrayList<Usuario>(repoUsuarios.elementos)
 	}
