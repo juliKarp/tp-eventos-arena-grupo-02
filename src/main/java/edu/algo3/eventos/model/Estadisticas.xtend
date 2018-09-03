@@ -7,7 +7,6 @@ import edu.algo2.repositorio.RepoLocaciones
 import edu.algo2.repositorio.RepoServicios
 import edu.algo2.repositorio.RepoUsuarios
 import java.time.LocalDateTime
-import java.util.ArrayList
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.applicationContext.ApplicationContext
 import org.uqbar.commons.model.annotations.Observable
@@ -18,13 +17,13 @@ class Estadisticas {
 	int valor
 	
 	def getUsuariosActivos() {
-		new ArrayList<Usuario>(repoUsuarios.elementos.sortBy[getActividad].reverse)
+		listaUsuariosActivos.subList(0,Math.min(5, listaUsuariosActivos.size()))
 	}
 	def getLocacionesPopulares() {
-		new ArrayList<Locacion>(locacionesEnUso)
+		listaLocacionesPopulares
 	}
 	def getServiciosNuevos() {
-		new ArrayList<Servicio>(repoServicios.elementos.reverseView)
+		listaServiciosNuevos.subList(0,Math.min(5, listaServiciosNuevos.size()))
 	}
 	
 	def getCantidadEventos() {
@@ -46,14 +45,22 @@ class Estadisticas {
 		eventos.fold(0, [suma, invitacion|suma + invitacion.cantidadInvitaciones])
 	}
 	
+	def listaUsuariosActivos() {
+		repoUsuarios.elementos.sortBy[getActividad].reverse
+	}
+	
+	def listaLocacionesPopulares() {
+		eventos.map[locacion].toSet // TODO: HACER QUE ORDENE 
+	}
+	
+	def listaServiciosNuevos() {
+		repoServicios.elementos.reverseView
+	}
+	
 	def getEventos() {
 		repoUsuarios.elementos.map[eventos].flatten.toList
 	}
-	
-	def getLocacionesEnUso(){
-		eventos.map[locacion]
-	}
-	
+		
 	def RepoUsuarios getRepoUsuarios() {
 		ApplicationContext.instance.getSingleton(typeof(Usuario))
 	}

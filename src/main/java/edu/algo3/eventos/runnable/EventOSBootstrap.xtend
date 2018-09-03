@@ -82,9 +82,9 @@ class EventOSBootstrap extends CollectionBasedBootstrap {
 			email = "solito@yahoo.com"
 		]
 		repoUsuarios => [
+			create(usuarioOrganizador)
 			create(lucas_capo)
 			create(martin1990)
-			create(usuarioOrganizador)
 			create(elBarto)
 			create(elHomo)
 			create(usuarioSolitario)
@@ -117,7 +117,6 @@ class EventOSBootstrap extends CollectionBasedBootstrap {
 			fechaHasta = LocalDateTime.now.plus(18, ChronoUnit.DAYS).minus(1, ChronoUnit.HOURS)
 			precio = 350.50
 			edadMinima = 12
-			repoUsuarios.elementos.get(0).eventos.add(it)
 		]
 		lucas_capo.organizarEventoAbierto(fiesta)
 		fiesta.nuevaEntrada(elHomo)
@@ -128,7 +127,6 @@ class EventOSBootstrap extends CollectionBasedBootstrap {
 			fechaDesde = LocalDateTime.now.plus(16, ChronoUnit.DAYS)
 			fechaHasta = LocalDateTime.now.plus(18, ChronoUnit.DAYS).minus(1, ChronoUnit.HOURS)
 			capacidadMaxima = 100
-			repoUsuarios.elementos.get(1).eventos.add(it)
 		]
 		martin1990.organizarEventoCerrado(privada)
 		privada.nuevaInvitacion(lucas_capo,5)
@@ -139,7 +137,6 @@ class EventOSBootstrap extends CollectionBasedBootstrap {
 			fechaDesde = LocalDateTime.now.plus(16, ChronoUnit.DAYS)
 			fechaHasta = LocalDateTime.now.plus(18, ChronoUnit.DAYS).minus(1, ChronoUnit.HOURS)
 			capacidadMaxima = 100
-			repoUsuarios.elementos.get(1).eventos.add(it)
 		]
 		usuarioOrganizador.organizarEventoCerrado(fiestita)
 		fiestita.nuevaInvitacion(lucas_capo,5)
