@@ -1,9 +1,7 @@
 package edu.algo3.eventos.runnable
 
-import edu.algo2.eventos.Entrada
 import edu.algo2.eventos.EventoAbierto
 import edu.algo2.eventos.EventoCerrado
-import edu.algo2.eventos.Invitacion
 import edu.algo2.eventos.Locacion
 import edu.algo2.eventos.Servicio
 import edu.algo2.eventos.TarifaFija
@@ -22,13 +20,12 @@ import org.uqbar.commons.applicationContext.ApplicationContext
 import org.uqbar.geodds.Point
 
 class EventOSBootstrap extends CollectionBasedBootstrap {
-	
+
 	new() {
 		ApplicationContext.instance.configureSingleton(typeof(Usuario), new RepoUsuarios)
 		ApplicationContext.instance.configureSingleton(typeof(Locacion), new RepoLocaciones)
 		ApplicationContext.instance.configureSingleton(typeof(Servicio), new RepoServicios)
 		ApplicationContext.instance.configureSingleton(typeof(Actualizacion), new Actualizacion)
-		
 	}
 
 	override run() {
@@ -36,27 +33,70 @@ class EventOSBootstrap extends CollectionBasedBootstrap {
 		val repoLocaciones = ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepoLocaciones
 		val repoServicios = ApplicationContext.instance.getSingleton(typeof(Servicio)) as RepoServicios
 
-		val locacion = new Locacion("Casa de Fiesta", -35, -59, 20.0)
-		
+		val locacion1 = new Locacion("Casa de Fiesta", -35, -59, 20.0)
+		val locacion2 = new Locacion("Salón El Abierto", -34.603759, -58.381586, 200.0)
+		val locacion3 = new Locacion("Estadio Obras", -34.572224, -58.535651, 2000.0)
+		val locacion4 = new Locacion("Saloncito", -34.603759, -58.381586, 200.0)
+		val locacion5 = new Locacion("Castillo para eventos", -34.603759, -58.381586, 200.0)
+		val locacion6 = new Locacion("Tropitango", -34.603759, -58.381586, 200.0)
+
+		val lucas_capo = new Usuario("lucas_capo", repoUsuarios.tipoUsuarioAmateur) => [
+			fechaNacimiento = LocalDate.now.minus(25, ChronoUnit.YEARS)
+			direccion = new Point(-35, -60)
+			nombreApellido = "Lucas Lopez"
+			email = "lucas_93@hotmail.com"
+			radioCercania = 100.00
+		]
+		val martin1990 = new Usuario("martin1990", repoUsuarios.tipoUsuarioProfesional) => [
+			fechaNacimiento = LocalDate.now.minus(28, ChronoUnit.YEARS)
+			direccion = new Point(-35, -60)
+			nombreApellido = "Martín Varela"
+			email = "martinvarela90@yahoo.com"
+			radioCercania = 100.00
+		]
+		val elBarto = new Usuario("elBarto", repoUsuarios.tipoUsuarioFree) => [
+			fechaNacimiento = LocalDate.now.minus(10, ChronoUnit.YEARS)
+			direccion = new Point(-35, -60)
+			nombreApellido = "Bart Simpson"
+			email = "elbarto@gmail.com"
+			radioCercania = 100.00
+		]
+		val elHomo = new Usuario("elHomo", repoUsuarios.tipoUsuarioFree) => [
+			fechaNacimiento = LocalDate.now.minus(45, ChronoUnit.YEARS)
+			direccion = new Point(-35, -60)
+			nombreApellido = "Homero Simpson"
+			email = "homerosimpson@gmail.com"
+			radioCercania = 100.00
+		]
+		val usuarioOrganizador = new Usuario("elOrganizer", repoUsuarios.tipoUsuarioProfesional) => [
+			fechaNacimiento = LocalDate.now.minus(28, ChronoUnit.YEARS)
+			direccion = new Point(-35, -60)
+			nombreApellido = "Ricardo Montaner"
+			email = "ricardito@yahoo.com"
+			radioCercania = 100.00
+		]
+		val usuarioSolitario = new Usuario("elEmo", repoUsuarios.tipoUsuarioProfesional) => [
+			fechaNacimiento = LocalDate.now.minus(28, ChronoUnit.YEARS)
+			direccion = new Point(-35, -60)
+			nombreApellido = "Emilio Solano"
+			email = "solito@yahoo.com"
+		]
 		repoUsuarios => [
-			create(new Usuario("lucas_capo", tipoUsuarioAmateur) => [
-				fechaNacimiento = LocalDate.now.minus(25, ChronoUnit.YEARS)
-				direccion = new Point(-35, -60)
-				nombreApellido = "Lucas Lopez"
-				email = "lucas_93@hotmail.com"
-			])
-			create(new Usuario("martin1990", tipoUsuarioFree) => [
-				fechaNacimiento = LocalDate.now.minus(28, ChronoUnit.YEARS)
-				direccion = new Point(-35, -60)
-				nombreApellido = "Martín Varela"
-				email = "martinvarela90@yahoo.com"
-			])
+			create(lucas_capo)
+			create(martin1990)
+			create(usuarioOrganizador)
+			create(elBarto)
+			create(elHomo)
+			create(usuarioSolitario)
 		]
 
 		repoLocaciones => [
-			create(locacion)
-			create(new Locacion("Salón El Abierto", -34.603759, -58.381586, 200.0))
-			create(new Locacion("Estadio Obras", -34.572224, -58.535651, 2000.0))
+			create(locacion1)
+			create(locacion2)
+			create(locacion3)
+			create(locacion4)
+			create(locacion5)
+			create(locacion6)
 		]
 
 		repoServicios => [
@@ -70,35 +110,47 @@ class EventOSBootstrap extends CollectionBasedBootstrap {
 				tipoTarifa = new TarifaPorPersona => [porcentajeMinimo = 0.1]
 			])
 		]
-		
-		val eventoAbierto = new EventoAbierto("La Fiesta", locacion) => [
+
+		val fiesta = new EventoAbierto("La Fiesta", locacion1) => [
 			fechaMaximaConfirmacion = LocalDateTime.now.plus(10, ChronoUnit.DAYS)
 			fechaDesde = LocalDateTime.now.plus(16, ChronoUnit.DAYS)
 			fechaHasta = LocalDateTime.now.plus(18, ChronoUnit.DAYS).minus(1, ChronoUnit.HOURS)
 			precio = 350.50
 			edadMinima = 12
-			organizador = repoUsuarios.elementos.get(0)
 			repoUsuarios.elementos.get(0).eventos.add(it)
 		]
-
-		val eventoCerrado = new EventoCerrado("La Fiesta Privada", locacion) => [
+		lucas_capo.organizarEventoAbierto(fiesta)
+		fiesta.nuevaEntrada(elHomo)
+		fiesta.nuevaEntrada(martin1990)
+		
+		val privada = new EventoCerrado("La Fiesta Privada", locacion1) => [
 			fechaMaximaConfirmacion = LocalDateTime.now.plus(10, ChronoUnit.DAYS)
 			fechaDesde = LocalDateTime.now.plus(16, ChronoUnit.DAYS)
 			fechaHasta = LocalDateTime.now.plus(18, ChronoUnit.DAYS).minus(1, ChronoUnit.HOURS)
-			capacidadMaxima = 10
-			organizador = repoUsuarios.elementos.get(1)
+			capacidadMaxima = 100
 			repoUsuarios.elementos.get(1).eventos.add(it)
 		]
+		martin1990.organizarEventoCerrado(privada)
+		privada.nuevaInvitacion(lucas_capo,5)
+		privada.nuevaInvitacion(martin1990,5)
 
-		val invitacionAceptada = new Invitacion(eventoCerrado, repoUsuarios.elementos.get(0), 5) => [aceptada = true]
-		eventoCerrado.invitaciones.add(invitacionAceptada)
+		val fiestita = new EventoCerrado("La Fiestita", locacion6) => [
+			fechaMaximaConfirmacion = LocalDateTime.now.plus(10, ChronoUnit.DAYS)
+			fechaDesde = LocalDateTime.now.plus(16, ChronoUnit.DAYS)
+			fechaHasta = LocalDateTime.now.plus(18, ChronoUnit.DAYS).minus(1, ChronoUnit.HOURS)
+			capacidadMaxima = 100
+			repoUsuarios.elementos.get(1).eventos.add(it)
+		]
+		usuarioOrganizador.organizarEventoCerrado(fiestita)
+		fiestita.nuevaInvitacion(lucas_capo,5)
+		fiestita.nuevaInvitacion(martin1990,5)
+		fiestita.nuevaInvitacion(elBarto,5)
+		fiestita.nuevaInvitacion(elHomo,5)
 		
-		val invitacionRechazada = new Invitacion(eventoCerrado, repoUsuarios.elementos.get(1), 5) => [rechazada = true]
-		eventoCerrado.invitaciones.add(invitacionRechazada)
-		
-		val entrada = new Entrada(eventoAbierto, repoUsuarios.elementos.get(1))
-		eventoAbierto.entradasVendidas.add(entrada)
-
+		lucas_capo.invitaciones.forEach[aceptarInvitacion(5)]
+		martin1990.invitaciones.forEach[aceptarInvitacion(5)]
+		elBarto.invitaciones.forEach[aceptarInvitacion(5)]
+		elHomo.invitaciones.forEach[aceptarInvitacion(5)]
 	}
 }
 

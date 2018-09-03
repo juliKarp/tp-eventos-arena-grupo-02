@@ -49,6 +49,7 @@ class GestionUsuariosMenu extends Window<Usuarios> {
 			agregarColumna("Username", "nombreUsuario")
 			agregarColumna("Nombre y apellido", "nombreApellido")
 			agregarColumna("email", "email")
+			agregarColumna("act", "actividad")
 		]
 
 	}
