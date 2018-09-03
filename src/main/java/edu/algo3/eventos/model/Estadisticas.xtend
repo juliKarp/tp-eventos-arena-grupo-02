@@ -18,16 +18,15 @@ class Estadisticas {
 	int valor
 	
 	def getUsuariosActivos() {
-		new ArrayList<Usuario>(repoUsuarios.elementos)
+		new ArrayList<Usuario>(repoUsuarios.elementos.sortBy[getActividad].reverse)
 	}
 	def getLocacionesPopulares() {
-		new ArrayList<Locacion>(repoLocaciones.elementos)
+		new ArrayList<Locacion>(locacionesEnUso)
 	}
 	def getServiciosNuevos() {
-		new ArrayList<Servicio>(repoServicios.elementos)
+		new ArrayList<Servicio>(repoServicios.elementos.reverseView)
 	}
 	
-
 	def getCantidadEventos() {
 		eventos.size
 	}
@@ -49,6 +48,10 @@ class Estadisticas {
 	
 	def getEventos() {
 		repoUsuarios.elementos.map[eventos].flatten.toList
+	}
+	
+	def getLocacionesEnUso(){
+		eventos.map[locacion]
 	}
 	
 	def RepoUsuarios getRepoUsuarios() {

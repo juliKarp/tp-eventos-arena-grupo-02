@@ -36,6 +36,8 @@ class EventOSBootstrap extends CollectionBasedBootstrap {
 		val repoLocaciones = ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepoLocaciones
 		val repoServicios = ApplicationContext.instance.getSingleton(typeof(Servicio)) as RepoServicios
 
+		val locacion = new Locacion("Casa de Fiesta", -35, -59, 20.0)
+		
 		repoUsuarios => [
 			create(new Usuario("lucas_capo", tipoUsuarioAmateur) => [
 				fechaNacimiento = LocalDate.now.minus(25, ChronoUnit.YEARS)
@@ -52,6 +54,7 @@ class EventOSBootstrap extends CollectionBasedBootstrap {
 		]
 
 		repoLocaciones => [
+			create(locacion)
 			create(new Locacion("Salón El Abierto", -34.603759, -58.381586, 200.0))
 			create(new Locacion("Estadio Obras", -34.572224, -58.535651, 2000.0))
 		]
@@ -68,9 +71,6 @@ class EventOSBootstrap extends CollectionBasedBootstrap {
 			])
 		]
 		
-		
-		val locacion = new Locacion("Casa de Fiesta", -35, -59, 20.0)
-
 		val eventoAbierto = new EventoAbierto("La Fiesta", locacion) => [
 			fechaMaximaConfirmacion = LocalDateTime.now.plus(10, ChronoUnit.DAYS)
 			fechaDesde = LocalDateTime.now.plus(16, ChronoUnit.DAYS)
