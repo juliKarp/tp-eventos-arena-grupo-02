@@ -20,10 +20,6 @@ class EditarServicioMenu extends TransactionalDialog<Servicio> {
 		super(owner, model)
 		this.title = "EventOS - Servicio"
 	}
-	
-	def aplicacion() {
-		this.owner as EventOSApplication
-	}
 
 	override createFormPanel(Panel mainPanel) {
 		new Panel(mainPanel) => [
@@ -101,7 +97,7 @@ class EditarServicioMenu extends TransactionalDialog<Servicio> {
 		valorPanel.layout = new VerticalLayout
 		new Button(valorPanel) => [
 			caption = "Cambiar tipo tarifa"
-//			onClick [this.aplicacion.editarTipoTarifa(this, this.modelObject.tipoTarifa)]
+			onClick [EventOSApplication.editarTipoTarifa(this, this.modelObject)]
 			setAsDefault
 			disableOnError
 		]

@@ -3,12 +3,14 @@ package edu.algo3.eventos.runnable
 import edu.algo2.eventos.Locacion
 import edu.algo2.eventos.Servicio
 import edu.algo2.eventos.Usuario
+import edu.algo3.eventos.model.EditorTipoTarifa
 import edu.algo3.eventos.model.Estadisticas
 import edu.algo3.eventos.model.Locaciones
 import edu.algo3.eventos.model.Servicios
 import edu.algo3.eventos.model.Usuarios
 import edu.algo3.eventos.view.EditarLocacionMenu
 import edu.algo3.eventos.view.EditarServicioMenu
+import edu.algo3.eventos.view.EditarTipoTarifaMenu
 import edu.algo3.eventos.view.EditarUsuarioMenu
 import edu.algo3.eventos.view.GestionLocacionesMenu
 import edu.algo3.eventos.view.GestionServiciosMenu
@@ -18,7 +20,6 @@ import edu.algo3.eventos.view.NuevaLocacionMenu
 import edu.algo3.eventos.view.NuevoServicioMenu
 import edu.algo3.eventos.view.NuevoUsuarioMenu
 import org.uqbar.arena.Application
-import edu.algo2.eventos.TipoTarifa
 
 class EventOSApplication extends Application {
 
@@ -114,8 +115,11 @@ class EventOSApplication extends Application {
 		]
 	}
 	
-	def editarTipoTarifa(EditarServicioMenu parent, TipoTarifa tipoTarifa) {
-		//TODO
+	def static editarTipoTarifa(EditarServicioMenu parent, Servicio _servicio) {
+		val editor = new EditorTipoTarifa => [servicio = _servicio]
+		new EditarTipoTarifaMenu(parent, editor) => [
+			open
+		]
 	}
 	
 }
