@@ -3,15 +3,15 @@ package edu.algo3.eventos.view
 import edu.algo3.eventos.model.EditorTipoTarifa
 import org.uqbar.arena.aop.windows.TransactionalDialog
 import org.uqbar.arena.bindings.ObservableProperty
+import org.uqbar.arena.layout.ColumnLayout
 import org.uqbar.arena.layout.VerticalLayout
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.widgets.Label
+import org.uqbar.arena.widgets.NumericField
 import org.uqbar.arena.widgets.Panel
 import org.uqbar.arena.widgets.Selector
-import org.uqbar.arena.widgets.TextBox
 
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
-import org.uqbar.arena.layout.ColumnLayout
 
 class EditarTipoTarifaMenu extends TransactionalDialog<EditorTipoTarifa> {
 	
@@ -71,13 +71,13 @@ class EditarTipoTarifaMenu extends TransactionalDialog<EditorTipoTarifa> {
 			width = 90
 			alignLeft
 		]
-		new TextBox(valorPanel) => [
+		new NumericField(valorPanel) => [
 			value <=> costo
 			width = 90
 			alignLeft
 			enabled <=> "habilitaCostoMinimo"
 		]
-		new TextBox(valorPanel) => [
+		new NumericField(valorPanel) => [
 			value <=> porcentaje
 			width = 90
 			alignLeft

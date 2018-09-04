@@ -3,7 +3,6 @@ package edu.algo3.eventos.view
 import edu.algo2.eventos.Servicio
 import edu.algo2.repositorio.RepoServicios
 import edu.algo3.eventos.model.Servicios
-import edu.algo3.eventos.runnable.Actualizacion
 import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.layout.HorizontalLayout
 import org.uqbar.arena.layout.VerticalLayout
@@ -95,7 +94,7 @@ class GestionServiciosMenu extends Window<Servicios> {
 			new Button(it) => [
 				caption = "Update masivo"
 				onClick[
-					this.repoServicios.procesarListaJson(actualizacion.actualizacionServicios)
+					this.repoServicios.updateAll
 					this.actualizar
 					this.mainMenu.actualizar
 				]
@@ -107,8 +106,5 @@ class GestionServiciosMenu extends Window<Servicios> {
 	}
 	def RepoServicios getRepoServicios() {
 		ApplicationContext.instance.getSingleton(typeof(Servicio))
-	}
-	def Actualizacion getActualizacion() {
-		ApplicationContext.instance.getSingleton(typeof(Actualizacion))
 	}
 }

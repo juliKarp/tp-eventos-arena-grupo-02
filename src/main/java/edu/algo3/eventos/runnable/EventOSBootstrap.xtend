@@ -18,6 +18,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.arena.bootstrap.CollectionBasedBootstrap
 import org.uqbar.commons.applicationContext.ApplicationContext
 import org.uqbar.geodds.Point
+import org.uqbar.updateService.UpdateService
 
 class EventOSBootstrap extends CollectionBasedBootstrap {
 
@@ -121,7 +122,7 @@ class EventOSBootstrap extends CollectionBasedBootstrap {
 		lucas_capo.organizarEventoAbierto(fiesta)
 		fiesta.nuevaEntrada(elHomo)
 		fiesta.nuevaEntrada(martin1990)
-		
+
 		val privada = new EventoCerrado("La Fiesta Privada", locacion1) => [
 			fechaMaximaConfirmacion = LocalDateTime.now.plus(10, ChronoUnit.DAYS)
 			fechaDesde = LocalDateTime.now.plus(16, ChronoUnit.DAYS)
@@ -129,8 +130,8 @@ class EventOSBootstrap extends CollectionBasedBootstrap {
 			capacidadMaxima = 100
 		]
 		martin1990.organizarEventoCerrado(privada)
-		privada.nuevaInvitacion(lucas_capo,5)
-		privada.nuevaInvitacion(martin1990,5)
+		privada.nuevaInvitacion(lucas_capo, 5)
+		privada.nuevaInvitacion(martin1990, 5)
 
 		val fiestita = new EventoCerrado("La Fiestita", locacion6) => [
 			fechaMaximaConfirmacion = LocalDateTime.now.plus(10, ChronoUnit.DAYS)
@@ -139,21 +140,35 @@ class EventOSBootstrap extends CollectionBasedBootstrap {
 			capacidadMaxima = 100
 		]
 		usuarioOrganizador.organizarEventoCerrado(fiestita)
-		fiestita.nuevaInvitacion(lucas_capo,5)
-		fiestita.nuevaInvitacion(martin1990,5)
-		fiestita.nuevaInvitacion(elBarto,5)
-		fiestita.nuevaInvitacion(elHomo,5)
-		
+		fiestita.nuevaInvitacion(lucas_capo, 5)
+		fiestita.nuevaInvitacion(martin1990, 5)
+		fiestita.nuevaInvitacion(elBarto, 5)
+		fiestita.nuevaInvitacion(elHomo, 5)
+
 		lucas_capo.invitaciones.forEach[aceptarInvitacion(5)]
 		martin1990.invitaciones.forEach[aceptarInvitacion(5)]
 		elBarto.invitaciones.forEach[aceptarInvitacion(5)]
 		elHomo.invitaciones.forEach[aceptarInvitacion(5)]
+		
+		repoLocaciones.servicioActualizacion = new Actualizacion
+		repoUsuarios.servicioActualizacion = new Actualizacion
+		repoServicios.servicioActualizacion = new Actualizacion
 	}
+	
 }
 
 @Accessors
-class Actualizacion {
-	val actualizacionUsuarios = '[{"nombreUsuario":"nose","nombreApellido":"El Que no sabe","email":"no_se@hotmail.com","fechaNacimiento":"15/01/1992","direccion":{"calle":"25 de Mayo","numero":3918,"localidad":"San Martín","provincia":"Buenos Aires","coordenadas":{"x":-34.572224,"y":51.535651}}},{"nombreUsuario":"martin1990","nombreApellido":"Martín Varela","email":"otromail@yahoo.com","fechaNacimiento":"18/11/1990","direccion":{"calle":"Av. Triunvirato","numero":4065,"localidad":"CABA","provincia":"","coordenadas":{"x":-33.58236,"y":60.516598}}}]'
-	val actualizacionLocaciones = '[{"x":-34.603759,"y":-58.381586,"nombre":"El quinchito","superficie":150.00},{"x":-34.603759,"y":-60.381586,"nombre":"Salón El Abierto"},{"x":-34.572224,"y":-58.535651,"nombre":"Estadio Obras"}]'
-	val actualizacionServicios = '[{"descripcion":"Catering Re Loco","tarifaServicio":{"tipo":"TPH","valor":1000.00,"minimo":3500.00},"tarifaTraslado":30.00,"ubicacion":{"x":-34.572224,"y":58.535651}},{"descripcion":"Catering Food Party","tarifaServicio":{"tipo":"TF","valor":5000.00},"tarifaTraslado":30.00,"ubicacion":{"x":-34.572224,"y":58.535651}}]'
+class Actualizacion extends UpdateService {
+
+	override getUserUpdates() {
+		'[{"nombreUsuario":"nose","nombreApellido":"El Que no sabe","email":"no_se@hotmail.com","fechaNacimiento":"15/01/1992","direccion":{"calle":"25 de Mayo","numero":3918,"localidad":"San Martín","provincia":"Buenos Aires","coordenadas":{"x":-34.572224,"y":51.535651}}},{"nombreUsuario":"martin1990","nombreApellido":"Martín Varela","email":"otromail@yahoo.com","fechaNacimiento":"18/11/1990","direccion":{"calle":"Av. Triunvirato","numero":4065,"localidad":"CABA","provincia":"","coordenadas":{"x":-33.58236,"y":60.516598}}}]'
+	}
+
+	override getLocationUpdates() {
+		'[{"x":-34.603759,"y":-58.381586,"nombre":"El quinchito","superficie":150.00},{"x":-34.603759,"y":-60.381586,"nombre":"Salón El Abierto"},{"x":-34.572224,"y":-58.535651,"nombre":"Estadio Obras"}]'
+	}
+
+	override getServiceUpdates() {
+		'[{"descripcion":"Catering Re Loco","tarifaServicio":{"tipo":"TPH","valor":1000.00,"minimo":3500.00},"tarifaTraslado":30.00,"ubicacion":{"x":-34.572224,"y":58.535651}},{"descripcion":"Catering Food Party","tarifaServicio":{"tipo":"TF","valor":5000.00},"tarifaTraslado":30.00,"ubicacion":{"x":-34.572224,"y":58.535651}}]'
+	}
 }

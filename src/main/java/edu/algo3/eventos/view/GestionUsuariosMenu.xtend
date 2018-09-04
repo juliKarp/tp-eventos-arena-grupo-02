@@ -15,7 +15,6 @@ import org.uqbar.commons.applicationContext.ApplicationContext
 import org.uqbar.commons.model.utils.ObservableUtils
 
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
-import edu.algo3.eventos.runnable.Actualizacion
 
 class GestionUsuariosMenu extends Window<Usuarios> {
 
@@ -45,7 +44,7 @@ class GestionUsuariosMenu extends Window<Usuarios> {
 		new Table<Usuario>(panel, typeof(Usuario)) => [
 			items <=> "usuarios"
 			value <=> "usuarioSeleccionado"
-			numberVisibleRows = 6
+			numberVisibleRows = 10
 			agregarColumna("Username", "nombreUsuario")
 			agregarColumna("Nombre y apellido", "nombreApellido")
 			agregarColumna("email", "email")
@@ -95,7 +94,7 @@ class GestionUsuariosMenu extends Window<Usuarios> {
 			new Button(it) => [
 				caption = "Update masivo"
 				onClick[
-					this.repoUsuarios.procesarListaJson(actualizacion.actualizacionUsuarios)
+					this.repoUsuarios.updateAll
 					this.actualizar
 					this.mainMenu.actualizar
 				]
@@ -107,9 +106,5 @@ class GestionUsuariosMenu extends Window<Usuarios> {
 	}
 	def RepoUsuarios getRepoUsuarios() {
 		ApplicationContext.instance.getSingleton(typeof(Usuario))
-	}
-	
-	def Actualizacion getActualizacion() {
-		ApplicationContext.instance.getSingleton(typeof(Actualizacion))
 	}
 }

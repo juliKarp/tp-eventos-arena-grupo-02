@@ -3,7 +3,6 @@ package edu.algo3.eventos.view
 import edu.algo2.eventos.Locacion
 import edu.algo2.repositorio.RepoLocaciones
 import edu.algo3.eventos.model.Locaciones
-import edu.algo3.eventos.runnable.Actualizacion
 import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.layout.HorizontalLayout
 import org.uqbar.arena.layout.VerticalLayout
@@ -74,7 +73,7 @@ class GestionLocacionesMenu extends Window<Locaciones> {
 			]
 
 			new Button(it) => [
-				caption = "Elimiar"
+				caption = "Eliminar"
 				bindEnabled(new NotNullObservable("locacionSeleccionada"))
 				onClick[
 					repoLocaciones.delete(this.modelObject.locacionSeleccionada)
@@ -95,7 +94,7 @@ class GestionLocacionesMenu extends Window<Locaciones> {
 			new Button(it) => [
 				caption = "Update masivo"
 				onClick[
-					this.repoLocaciones.procesarListaJson(actualizacion.actualizacionLocaciones)
+					this.repoLocaciones.updateAll
 					this.actualizar
 					this.mainMenu.actualizar
 				]
@@ -107,8 +106,5 @@ class GestionLocacionesMenu extends Window<Locaciones> {
 	}
 	def RepoLocaciones getRepoLocaciones() {
 		ApplicationContext.instance.getSingleton(typeof(Locacion))
-	}
-	def Actualizacion getActualizacion() {
-		ApplicationContext.instance.getSingleton(typeof(Actualizacion))
 	}
 }
