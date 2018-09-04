@@ -85,7 +85,7 @@ class MainMenu extends Window<Estadisticas> {
 
 		new Table<Usuario>(usuariosPanel, typeof(Usuario)) => [
 			items <=> "usuariosActivos"
-			numberVisibleRows = 5
+			numberVisibleRows = 6
 			agregarColumna("Username", "nombreUsuario", 100)
 			agregarColumna("Nombre y apellido", "nombreApellido", 200)
 		]
@@ -104,7 +104,7 @@ class MainMenu extends Window<Estadisticas> {
 
 		new Table<Locacion>(locacionesPanel, typeof(Locacion)) => [
 			items <=> "locacionesPopulares"
-			numberVisibleRows = 5
+			numberVisibleRows = 6
 			agregarColumna("Nombre", "nombre", 200)
 			agregarColumna("Capacidad", "capacidadMaxima", 100)
 		]
@@ -123,7 +123,7 @@ class MainMenu extends Window<Estadisticas> {
 
 		new Table<Servicio>(serviciosPanel, typeof(Servicio)) => [
 			items <=> "serviciosNuevos"
-			numberVisibleRows = 5
+			numberVisibleRows = 6
 			agregarColumna("Nombre", "descripcion", 200)
 			agregarColumna("Tarifa", "tarifa", 100)
 		]

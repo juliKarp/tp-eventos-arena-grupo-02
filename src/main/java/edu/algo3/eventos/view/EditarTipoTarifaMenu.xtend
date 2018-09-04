@@ -1,7 +1,9 @@
 package edu.algo3.eventos.view
 
 import edu.algo2.eventos.Servicio
+import edu.algo2.eventos.TipoTarifa
 import edu.algo2.repositorio.RepoServicios
+import edu.algo3.eventos.runnable.EventOSApplication
 import org.uqbar.arena.aop.windows.TransactionalDialog
 import org.uqbar.arena.layout.ColumnLayout
 import org.uqbar.arena.layout.VerticalLayout
@@ -12,13 +14,12 @@ import org.uqbar.arena.widgets.TextBox
 import org.uqbar.commons.applicationContext.ApplicationContext
 
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
-import edu.algo3.eventos.runnable.EventOSApplication
 
-class EditarServicioMenu extends TransactionalDialog<Servicio> {
+class EditarTipoTarifaMenu extends TransactionalDialog<TipoTarifa> {
 
-	new(GestionServiciosMenu owner, Servicio model) {
+	new(GestionServiciosMenu owner, TipoTarifa model) {
 		super(owner, model)
-		this.title = "EventOS - Servicio"
+		this.title = "EventOS - Tipo Tarifa"
 	}
 	
 	def aplicacion() {
@@ -29,11 +30,6 @@ class EditarServicioMenu extends TransactionalDialog<Servicio> {
 		new Panel(mainPanel) => [
 			layout = new ColumnLayout(2)
 			agregarNombreValor("Descripcion:", "descripcion")
-			agregarPunto("Ubicación:", "ubicacion")
-			agregarNombreValor("Tarifa por km:", "tarifaPorKm")
-			agregarNombreValor("Tarifa:", "tarifa")
-			agregarValorFijo("Tipo de tarifa:", "tipoTarifa")
-			agregarBoton("Elegir tipo tarifa")
 		]
 	}
 
@@ -63,47 +59,6 @@ class EditarServicioMenu extends TransactionalDialog<Servicio> {
 			value <=> valor
 			width = 200
 			alignLeft
-		]
-	}
-	
-	def void agregarPunto(Panel panel, String nombre, String valor) {
-		var valorPanel = new Panel(panel)
-		valorPanel.layout = new VerticalLayout
-		new Label(valorPanel) => [
-			text = nombre
-			width = 100
-			alignLeft
-		]
-		new TextBox(valorPanel) => [
-			(value <=> valor).transformer = new PointTransformer
-			width = 200
-			alignLeft
-		]
-	}
-	
-	def agregarValorFijo(Panel panel, String nombre, String valor) {
-		var valorPanel = new Panel(panel)
-		valorPanel.layout = new VerticalLayout
-		new Label(valorPanel) => [
-			text = nombre
-			width = 100
-			alignLeft
-		]
-		new Label(valorPanel) => [
-			value <=> valor
-			width = 200
-			alignLeft
-		]
-	}
-	
-	def agregarBoton(Panel panel, String nombre) {
-		var valorPanel = new Panel(panel)
-		valorPanel.layout = new VerticalLayout
-		new Button(valorPanel) => [
-			caption = "Cambiar tipo tarifa"
-//			onClick [this.aplicacion.editarTipoTarifa(this, this.modelObject.tipoTarifa)]
-			setAsDefault
-			disableOnError
 		]
 	}
 	

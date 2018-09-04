@@ -18,6 +18,7 @@ import edu.algo3.eventos.view.NuevaLocacionMenu
 import edu.algo3.eventos.view.NuevoServicioMenu
 import edu.algo3.eventos.view.NuevoUsuarioMenu
 import org.uqbar.arena.Application
+import edu.algo2.eventos.TipoTarifa
 
 class EventOSApplication extends Application {
 
@@ -112,4 +113,9 @@ class EventOSApplication extends Application {
 			open
 		]
 	}
+	
+	def editarTipoTarifa(EditarServicioMenu parent, TipoTarifa tipoTarifa) {
+		//TODO
+	}
+	
 }
