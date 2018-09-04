@@ -11,6 +11,7 @@ import org.uqbar.arena.widgets.Selector
 import org.uqbar.arena.widgets.TextBox
 
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
+import org.uqbar.arena.layout.ColumnLayout
 
 class EditarTipoTarifaMenu extends TransactionalDialog<EditorTipoTarifa> {
 	
@@ -23,7 +24,7 @@ class EditarTipoTarifaMenu extends TransactionalDialog<EditorTipoTarifa> {
 		new Panel(mainPanel) => [
 			agregarValorFijo("Tipo de tarifa anterior:", "servicio.tipoTarifa")
 			agregarSeleccionable("Tipo de usuario:", "tipoTarifaPosibles", "tipoTarifaSeleccionado")
-			agregarNombreValor("Porcentaje mínimo:", "valor")
+			agregarSelectorValor("costoMinimo","porcentajeMinimo")
 		]
 	}
 
@@ -39,7 +40,6 @@ class EditarTipoTarifaMenu extends TransactionalDialog<EditorTipoTarifa> {
 				this.modelObject.servicio.tipoTarifa = this.modelObject.crearTipoTarifa
 				this.accept
 			]
-			disableOnError	
 		]
 	}
 	
@@ -58,18 +58,30 @@ class EditarTipoTarifaMenu extends TransactionalDialog<EditorTipoTarifa> {
 		]
 	}
 	
-	def void agregarNombreValor(Panel panel, String nombre, String valor) {
+	def void agregarSelectorValor(Panel panel, String costo, String porcentaje) {
 		var valorPanel = new Panel(panel)
-		valorPanel.layout = new VerticalLayout
+		valorPanel.layout = new ColumnLayout(2)
 		new Label(valorPanel) => [
-			text = nombre
-			width = 100
+			text = "Costo mínimo"
+			width = 90
+			alignLeft
+		]
+		new Label(valorPanel) => [
+			text = "Porcentaje mín."
+			width = 90
 			alignLeft
 		]
 		new TextBox(valorPanel) => [
-			value <=> valor
-			width = 200
+			value <=> costo
+			width = 90
 			alignLeft
+			enabled <=> "habilitaCostoMinimo"
+		]
+		new TextBox(valorPanel) => [
+			value <=> porcentaje
+			width = 90
+			alignLeft
+			enabled <=> "habilitaPorcentajeMinimo"
 		]
 	}
 	

@@ -21,7 +21,7 @@ class GestionServiciosMenu extends Window<Servicios> {
 
 	new(MainMenu owner, Servicios model) {
 		super(owner, model)
-		this.title = "EventOS - Gestión de Usuarios"
+		this.title = "EventOS - Gestión de Servicios"
 	}
 
 	override createContents(Panel mainPanel) {
@@ -84,7 +84,7 @@ class GestionServiciosMenu extends Window<Servicios> {
 			]
 
 			new Button(it) => [
-				caption = "Nuevo usuario"
+				caption = "Nuevo servicio"
 				onClick[
 					aplicacion.nuevoServicio(this)
 					this.actualizar

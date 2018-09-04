@@ -7,6 +7,7 @@ import edu.algo2.eventos.TipoTarifa
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.model.annotations.TransactionalAndObservable
 import edu.algo2.eventos.Servicio
+import org.uqbar.commons.model.annotations.Dependencies
 
 @Accessors
 @TransactionalAndObservable
@@ -20,21 +21,31 @@ class EditorTipoTarifa {
 		add(porHora)
 		add(porPersona)
 	]
-	TipoTarifaFactory tipoTarifaSeleccionado = fija
-	Double valor
+	TipoTarifaFactory tipoTarifaSeleccionado
+	Double costoMinimo = 0.0
+	Double porcentajeMinimo = 1.0
 	Servicio servicio
 
-	def TipoTarifa crearTipoTarifa(){
-		tipoTarifaSeleccionado.create(valor)
+	def TipoTarifa crearTipoTarifa() {
+		tipoTarifaSeleccionado.create(costoMinimo,porcentajeMinimo)
+	}
+
+	@Dependencies("tipoTarifaSeleccionado")
+	def getHabilitaCostoMinimo() {
+		tipoTarifaSeleccionado?.equals(porHora)
+	}
+	@Dependencies("tipoTarifaSeleccionado")
+	def getHabilitaPorcentajeMinimo() {
+		tipoTarifaSeleccionado?.equals(porPersona)
 	}
 }
 
 interface TipoTarifaFactory {
-	def TipoTarifa create(Double valor)
+	def TipoTarifa create(Double costoMinimo, Double porcentajeMinimo)
 }
 
 class TarifaFijaBuilder implements TipoTarifaFactory {
-	override TipoTarifa create(Double valor){
+	override TipoTarifa create(Double costoMinimo, Double porcentajeMinimo){
 		new TarifaFija
 	}
 	override toString(){
@@ -43,8 +54,8 @@ class TarifaFijaBuilder implements TipoTarifaFactory {
 }
 
 class TarifaPorHoraBuilder implements TipoTarifaFactory {
-	override TipoTarifa create(Double valor){
-		new TarifaPorHora() => [costoMinimo = valor]
+	override TipoTarifa create(Double _costoMinimo, Double _porcentajeMinimo){
+		new TarifaPorHora() => [costoMinimo = _costoMinimo]
 	}
 	override toString(){
 		"Tarifa por hora"
@@ -52,8 +63,8 @@ class TarifaPorHoraBuilder implements TipoTarifaFactory {
 }
 
 class TarifaPorPersonaBuilder implements TipoTarifaFactory {
-	override TipoTarifa create(Double valor){
-		new TarifaPorPersona() => [porcentajeMinimo = valor]
+	override TipoTarifa create(Double _costoMinimo, Double _porcentajeMinimo){
+		new TarifaPorPersona() => [porcentajeMinimo = _porcentajeMinimo]
 	}
 	override toString(){
 		"Tarifa por persona"
