@@ -32,11 +32,11 @@ class EditorTipoTarifa {
 
 	@Dependencies("tipoTarifaSeleccionado")
 	def getHabilitaCostoMinimo() {
-		tipoTarifaSeleccionado?.equals(porHora)
+		porHora.equals(tipoTarifaSeleccionado)
 	}
 	@Dependencies("tipoTarifaSeleccionado")
 	def getHabilitaPorcentajeMinimo() {
-		tipoTarifaSeleccionado?.equals(porPersona)
+		porPersona.equals(tipoTarifaSeleccionado)
 	}
 }
 

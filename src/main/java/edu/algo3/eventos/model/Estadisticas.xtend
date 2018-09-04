@@ -50,7 +50,10 @@ class Estadisticas {
 	}
 	
 	def listaLocacionesPopulares() {
-		eventos.map[locacion].toSet // TODO: HACER QUE ORDENE 
+		val locaciones = eventos.map[locacion]
+		locaciones.toSet.sortBy[ locacion |
+			locaciones.filter[equals(locacion)].size
+		].reverse
 	}
 	
 	def listaServiciosNuevos() {
