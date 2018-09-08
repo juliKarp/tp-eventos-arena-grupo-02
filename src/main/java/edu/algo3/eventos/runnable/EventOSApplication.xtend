@@ -74,7 +74,7 @@ class EventOSApplication extends Application {
 	def nuevaLocacion(GestionLocacionesMenu parent) {
 		val nueva = new Locacion
 		new NuevaLocacionMenu(parent, nueva) => [
-			onAccept[repoLocaciones.create(nueva)]
+			onAccept[repositorio.create(nueva)]
 			open
 		]
 	}
@@ -87,7 +87,7 @@ class EventOSApplication extends Application {
 			ubicacion = locacion.ubicacion
 		]
 		new EditarLocacionMenu(parent, copia) => [
-			onAccept[repoLocaciones.update(copia)]
+			onAccept[repositorio.update(copia)]
 			open
 		]
 	}
@@ -95,7 +95,7 @@ class EventOSApplication extends Application {
 	def nuevoServicio(GestionServiciosMenu parent) {
 		val nuevo = new Servicio
 		new NuevoServicioMenu(parent, nuevo) => [
-			onAccept[repoServicios.create(nuevo)]
+			onAccept[repositorio.create(nuevo)]
 			open
 		]
 	}
@@ -110,7 +110,7 @@ class EventOSApplication extends Application {
 			tipoTarifa = servicio.tipoTarifa
 		]
 		new EditarServicioMenu(parent, copia) => [
-			onAccept[repoServicios.update(copia)]
+			onAccept[repositorio.update(copia)]
 			open
 		]
 	}

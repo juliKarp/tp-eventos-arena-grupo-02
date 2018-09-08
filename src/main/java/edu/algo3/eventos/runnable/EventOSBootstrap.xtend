@@ -103,12 +103,15 @@ class EventOSBootstrap extends CollectionBasedBootstrap {
 		repoServicios => [
 			create(new Servicio("Fotografos unidos", new Point(-34, -51), 1000.0) => [
 				tipoTarifa = new TarifaFija
+				tarifaPorKm = 11.0
 			])
 			create(new Servicio("Show en vivo", new Point(-34, -51), 1000.0) => [
 				tipoTarifa = new TarifaPorHora
+				tarifaPorKm = 0.0
 			])
 			create(new Servicio("Catering Food Party", new Point(-34, -51), 1000.0) => [
 				tipoTarifa = new TarifaPorPersona => [porcentajeMinimo = 0.1]
+				tarifaPorKm = 30.0
 			])
 		]
 
