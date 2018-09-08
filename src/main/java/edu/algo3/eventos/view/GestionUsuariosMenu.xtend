@@ -11,10 +11,6 @@ class GestionUsuariosMenu extends GestionMenu<Usuario> {
 		this.title = "EventOS - Gestión de Usuarios"
 	}
 
-	override tipoDeTabla() {
-		typeof(Usuario)
-	}
-	
 	override agregarColumnas(Table<Usuario> tabla) {
 		tabla => [
 			agregarColumna("Username", "nombreUsuario")
@@ -22,11 +18,11 @@ class GestionUsuariosMenu extends GestionMenu<Usuario> {
 			agregarColumna("email", "email")
 		]
 	}
-	
+
 	override editar(Usuario seleccionado) {
 		aplicacion.editarUsuario(this, seleccionado)
 	}
-	
+
 	override nuevo() {
 		aplicacion.nuevoUsuario(this)
 	}

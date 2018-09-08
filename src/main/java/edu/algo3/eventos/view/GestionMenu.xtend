@@ -16,15 +16,15 @@ import org.uqbar.commons.model.utils.ObservableUtils
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
 
 abstract class GestionMenu<T extends Entidad> extends Window<GestionModel<T>> {
-	
+
 	new(WindowOwner owner, GestionModel<T> model) {
 		super(owner, model)
 	}
-	
+
 	def aplicacion() {
 		mainMenu.aplicacion
 	}
-	
+
 	def mainMenu() {
 		this.owner as MainMenu
 	}
@@ -36,17 +36,16 @@ abstract class GestionMenu<T extends Entidad> extends Window<GestionModel<T>> {
 			agregarPanelOpciones
 		]
 	}
-	
-	
+
 	def void agregarTablaElementos(Panel panel) {
-		new Table<T>(panel, tipoDeTabla) => [
+		new Table<T>(panel, this.modelObject.tipoDeElemento) => [
 			items <=> "elementos"
 			value <=> "seleccionado"
 			numberVisibleRows = 10
 			agregarColumnas()
 		]
 	}
-	
+
 	def void agregarColumna(Table<T> tabla, String titulo, String valor) {
 		new Column<T>(tabla) => [
 			title = titulo
@@ -54,8 +53,7 @@ abstract class GestionMenu<T extends Entidad> extends Window<GestionModel<T>> {
 			fixedSize = 100
 		]
 	}
-	
-	
+
 	def void agregarPanelOpciones(Panel panel) {
 		new Panel(panel) => [
 			layout = new VerticalLayout
@@ -94,14 +92,16 @@ abstract class GestionMenu<T extends Entidad> extends Window<GestionModel<T>> {
 			]
 		]
 	}
+
 	def actualizar() {
 		ObservableUtils.firePropertyChanged(this.modelObject, "elementos")
 		this.mainMenu.actualizar
 	}
-	
-	def Class<T> tipoDeTabla()
+
 	def void agregarColumnas(Table<T> tabla)
+
 	def void editar(T seleccionado)
+
 	def void nuevo()
-	
+
 }

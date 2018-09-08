@@ -10,24 +10,20 @@ class GestionLocacionesMenu extends GestionMenu<Locacion> {
 		super(owner, model)
 		this.title = "EventOS - Gestión de Locaciones"
 	}
-	
-	override tipoDeTabla() {
-		typeof(Locacion)
-	}
-	
+
 	override agregarColumnas(Table<Locacion> tabla) {
 		tabla => [
 			agregarColumna("Nombre", "nombre")
 			agregarColumna("Capacidad máxima", "capacidadMaxima")
 		]
 	}
-	
+
 	override editar(Locacion seleccionado) {
 		aplicacion.editarLocacion(this, seleccionado)
 	}
-	
+
 	override nuevo() {
 		aplicacion.nuevaLocacion(this)
 	}
-	
+
 }

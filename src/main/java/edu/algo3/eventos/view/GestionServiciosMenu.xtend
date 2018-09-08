@@ -10,10 +10,6 @@ class GestionServiciosMenu extends GestionMenu<Servicio> {
 		super(owner, model)
 		this.title = "EventOS - Gestión de Servicios"
 	}
-	
-	override tipoDeTabla() {
-		typeof(Servicio)
-	}
 
 	override agregarColumnas(Table<Servicio> tabla) {
 		tabla => [
@@ -21,11 +17,11 @@ class GestionServiciosMenu extends GestionMenu<Servicio> {
 			agregarColumna("Tarifa", "tarifa")
 		]
 	}
-	
+
 	override editar(Servicio seleccionado) {
 		aplicacion.editarServicio(this, seleccionado)
 	}
-	
+
 	override nuevo() {
 		aplicacion.nuevoServicio(this)
 	}
