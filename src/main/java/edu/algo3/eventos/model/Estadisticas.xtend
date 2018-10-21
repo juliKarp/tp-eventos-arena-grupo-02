@@ -10,6 +10,8 @@ import java.time.LocalDateTime
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.applicationContext.ApplicationContext
 import org.uqbar.commons.model.annotations.Observable
+import edu.algo2.eventos.Evento
+import edu.algo2.repositorio.RepoEventos
 
 @Observable
 @Accessors
@@ -39,7 +41,7 @@ class Estadisticas {
 		eventos.filter[esUnFracaso].size
 	}
 	def getCantidadEntradasVendidas() {
-		eventos.fold(0, [suma, invitacion|suma + invitacion.cantidadEntradas])
+		eventos.fold(0, [suma, invitacion|suma + invitacion.cantidadEntradasVendidas])
 	}
 	def getCantidadInvitacionesEnviadas() {
 		eventos.fold(0, [suma, invitacion|suma + invitacion.cantidadInvitaciones])
@@ -61,7 +63,7 @@ class Estadisticas {
 	}
 	
 	def getEventos() {
-		repoUsuarios.elementos.map[eventos].flatten.toList
+		repoEventos.elementos
 	}
 		
 	def RepoUsuarios getRepoUsuarios() {
@@ -74,6 +76,10 @@ class Estadisticas {
 	
 	def RepoServicios getRepoServicios() {
 		ApplicationContext.instance.getSingleton(typeof(Servicio))
+	}
+	
+	def RepoEventos getRepoEventos() {
+		ApplicationContext.instance.getSingleton(typeof(Evento))
 	}
 
 	
